@@ -1,1 +1,0 @@
-# ESC-Participation-Tracker
