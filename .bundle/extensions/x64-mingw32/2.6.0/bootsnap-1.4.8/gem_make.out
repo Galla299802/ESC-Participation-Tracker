@@ -1,0 +1,19 @@
+current directory: C:/Users/Austin/CSCE 431-503/ESC-Participation-Tracker/.bundle/gems/bootsnap-1.4.8/ext/bootsnap
+C:/Ruby26-x64/bin/ruby.exe -I C:/Ruby26-x64/lib/ruby/2.6.0 -r ./siteconf20200922-2908-1o78rzl.rb extconf.rb
+creating Makefile
+
+current directory: C:/Users/Austin/CSCE 431-503/ESC-Participation-Tracker/.bundle/gems/bootsnap-1.4.8/ext/bootsnap
+make "DESTDIR=" clean
+bash.exe: warning: could not find /tmp, please create!
+
+current directory: C:/Users/Austin/CSCE 431-503/ESC-Participation-Tracker/.bundle/gems/bootsnap-1.4.8/ext/bootsnap
+make "DESTDIR="
+generating bootsnap-x64-mingw32.def
+bash.exe: warning: could not find /tmp, please create!
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.so
+
+current directory: C:/Users/Austin/CSCE 431-503/ESC-Participation-Tracker/.bundle/gems/bootsnap-1.4.8/ext/bootsnap
+make "DESTDIR=" install
+bash.exe: warning: could not find /tmp, please create!
+/usr/bin/install -c -m 0755 bootsnap.so ./.gem.20200922-2908-y4rjk2/bootsnap
