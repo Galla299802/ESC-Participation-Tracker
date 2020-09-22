@@ -1,4 +1,8 @@
 class UserController < ApplicationController
-  def user_home
+
+  layout false
+
+  def home
   end
+
 end
