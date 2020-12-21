@@ -1,0 +1,29 @@
+<head>
+	<title>ESC PT - Login</title>
+	<%= stylesheet_link_tag "user" %>
+</head>
+
+<div class="container d-flex">
+  <div class="col d-flex justify-content-center">
+  	<div class="card w-50">
+  		<div class="card-header text-center">
+  			<h2 class="content-title">Login</h2>
+      </div>
+      <div class="card-body">
+  			<div class="tab-content">
+          <%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Enter your email' %>
+          <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Enter your password' %>
+          <% if devise_mapping.rememberable? -%>
+          <%= f.check_box :remember_me %>
+          <% end -%>
+          <a class="link" href="/user/sign_up">Create account</a>
+          <br>
+          <a class="link" href="/user/password/new"> Forgot password </a>
+          <%= f.submit "Login", class: 'form-control login-button' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

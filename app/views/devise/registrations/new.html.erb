@@ -1,0 +1,26 @@
+<head>
+	<title>ESC PT - Sign Up</title>
+	<%= stylesheet_link_tag "user" %>
+</head>
+
+<div class="container d-flex" id="sign-up-form">
+  <div class="col d-flex justify-content-center">
+  	<div class="card w-50">
+  		<div class="card-header text-center">
+  			<h2 class="content-title">Sign up</h2>
+      </div>
+      <div class="card-body">
+  			<div class="tab-content">
+          <%= bootstrap_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+          <%= f.text_field :first_name, placeholder: 'Enter your first name', class: 'form-control' %>
+          <%= f.text_field :last_name, placeholder: 'Enter your last name', class: 'form-control' %>
+          <%= f.email_field :email, placeholder: 'Enter your email', class: 'form-control' %>
+          <%= f.password_field :password, placeholder: 'Enter your password', class: 'form-control' %>
+          <%= f.password_field :password_confirmation, placeholder: ' Enter your password again', class: 'form-control' %>
+          <%= f.submit 'Sign up', class: 'form-control sign-up-button' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

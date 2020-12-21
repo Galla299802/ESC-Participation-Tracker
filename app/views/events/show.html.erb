@@ -1,0 +1,62 @@
+<head>
+	<title>ESC PT - Event Details</title>
+	<%= stylesheet_link_tag "events" %>
+</head>
+
+<% event_date = @event.Date.to_s[5...10] + "-" + @event.Date.to_s[0...4]%>
+<% event_hour = @event.Date.to_s[11...13].to_i %>
+<% am_or_pm = " am" %>
+
+<% if event_hour == 0 %>
+	<% event_hour = 12 %>
+<% elsif event_hour > 12 %>
+	<% event_hour = event_hour.modulo(12) %>
+	<% am_or_pm = " pm" %>
+<%end%>
+
+<% event_time = event_hour.to_s + @event.Date.to_s[13...16] + am_or_pm %>
+
+<div class="col-padding-30 d-flex justify-content-center">
+	<h1 class="page-header"> Event Details </h1> <br/>
+</div>
+
+<div class="col-card d-flex justify-content-center">
+	<div class="container">
+		<h1 class="show-title"><%=@event.EventName%>
+			<% if @event.Date.to_f < DateTime.current().to_f + 900.0 %>
+				(Finished)
+			<%end%>
+		</h1>
+	<div class="card mb-3" style="width: 100%">
+	  <div class="row no-gutters">
+	    <div class="col-md-4">
+				<div class="card-body text-center">
+				<%if @event.photoLink? %>
+						<image src=<%=@event.photoLink%> style="max-width:90%">
+						<%else%>
+				<%= image_tag "image-unavailable", class:"img-fluid", alt:"Image Unavailable" %>
+					<%end%>
+				</div>
+	    </div>
+	    <div class="col-md-4" >
+				<div class="card-header text-center" style="background-color: #D7D1D0">
+					<h1 class="content-title">Description</h1>
+				</div>
+	      <div class="card-body">
+					<p class="content-paragraph"><%=@event.Description%></p>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card-header text-center" style="background-color: #D7D1D0">
+						<h1 class="content-title">Date and Location</h1>
+				</div>
+		    <div class="card-body">
+					<p class="content-paragraph"> Date: <%=event_date%> at <%=event_time%>
+						<br/> Location: <%=@event.Location%>
+					</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+</div>

@@ -1,0 +1,132 @@
+<head>
+	<title>ESC PT - Event List</title>
+	<%= stylesheet_link_tag "events" %>
+</head>
+
+
+<% if @events.size > 0 %>
+	<% past_event_header = true %>
+	<% future_event_header = true %>
+
+	<% @events.each do |event|%>
+		<% event_date = event.Date.to_s[5...10] + "-" + event.Date.to_s[0...4]%>
+		<% event_hour = event.Date.to_s[11...13].to_i %>
+		<% am_or_pm = " am" %>
+
+		<% if event_hour == 0 %>
+			<% event_hour = 12 %>
+		<% elsif event_hour > 12 %>
+			<% event_hour = event_hour.modulo(12) %>
+			<% am_or_pm = " pm" %>
+		<%end%>
+
+		<% event_time = event_hour.to_s + event.Date.to_s[13...16] + am_or_pm %>
+
+		<% if (past_event_header && (event.Date - DateTime.current() + 22500) < 0) %>
+			<div class="col-padding-30 d-flex justify-content-center">
+				<h1 class="page-header"> Past Events </h1> <br/>
+			</div>
+			<% past_event_header = false %>
+		<% elsif (future_event_header && (event.Date - DateTime.current() + 22500) >= 0) %>
+			<div class="col-padding-bottom-30 d-flex justify-content-center">
+				<h1 class="page-header"> Future Events </h1> <br/>
+			</div>
+			<% future_event_header = false %>
+		<%end%>
+
+
+		<div class="col-card d-flex justify-content-center">
+			<div class="card w-50">
+				<div class="card-header text-center">
+					<h1 class="card-title"><%=event.EventName%>
+						<% if (event.Date - DateTime.current() + 22500) < 0 %>
+							(Past)
+						<% else %>
+							(<%=event_date%>)
+
+						<%end%>
+						<br>
+						<%if event.photoLink? %>
+						<image src=<%=event.photoLink%> style="max-width:90%">
+					<%end%>
+					</h1>
+
+
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#details_<%=event.id%>">Date and Location</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#description_<%=event.id%>">Description</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#attendance_<%=event.id%>">Attendance</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#actions_<%=event.id%>">Actions</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="card-body">
+					<div class="tab-content">
+						<div id="details_<%=event.id%>" class="tab-pane fade show active">
+							<h1 class="content-title">Date and Location</h1>
+							<p class="content-paragraph"> Date: <%=event_date%> at <%=event_time%>
+							<br/> Location: <%= event.Location%></p>
+						</div>
+						<div id="description_<%=event.id%>" class="tab-pane fade">
+							<h1 class="content-title">Description</h1>
+							<p class="tab-paragraph"><%=event.Description%></p>
+							<p class="tab-paragraph">This event is worth <%=event.point_value%> point(s).</p>
+						</div>
+						<div id="attendance_<%=event.id%>" class="tab-pane fade">
+							<h1 class="content-title">Attendance</h1>
+							<p class="content-paragraph">
+								<% if (event.Date - DateTime.current() + 22500) >= 0 %>
+									<% if event.users.exists?(current_user.id) %>
+										Signed Up
+									<%else%>
+										Not Signed Up
+									<%end%>
+								<% else %>
+									<% if event.users.exists?(current_user.id) %>
+										Attended
+									<%else%>
+										Not Attended
+									<%end%>
+								<%end%>
+							</p>
+						</div>
+						<div id="actions_<%=event.id%>" class="tab-pane fade">
+							<a class="btn btn-info" href="/events/<%=event.id%>" role="button">Show Details</a>
+							<% if (event.Date - DateTime.current() + 22500) >= 0 %>
+								<% if event.users.exists?(current_user.id) %>
+									<a class="btn btn-danger" href="/events/<%=event.id%>/leave" role="button">Leave</a>
+								<%else%>
+									<a class="btn btn-success" href="/events/<%=event.id%>/join" role="button">Join</a>
+								<%end%>
+							<%else%>
+								<% if event.users.exists?(current_user.id) %>
+									<a class="btn btn-danger disabled" href="/events/<%=event.id%>/leave" role="button" aria-disabled="true" tabindex="-1">Leave</a>
+								<%else%>
+									<a class="btn btn-success disabled" href="/events/<%=event.id%>/join" role="button" aria-disabled="true" tabindex="-1">Join</a>
+								<%end%>
+							<%end%>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	<%end%>
+<%else%>
+		<div class="col-padding-30 d-flex justify-content-center">
+			<h1 class="page-header"> No Events Posted </h1> <br/>
+		</div>
+		<div class="col-card d-flex justify-content-center">
+			<p class="paragraph-1">
+				There are currently no events posted. Check in another time for updates!
+			</p>
+		</div>
+	<%end%>

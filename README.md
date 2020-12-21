@@ -1,24 +1,39 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Required Components:
 
-Things you may want to cover:
+* Ruby 2.6.6p146
 
-* Ruby version
+* gem install rails
 
-* System dependencies
+* Postgres latest
 
-* Configuration
+* Yarn
 
-* Database creation
+* NodeJS
 
-* Database initialization
+Follow any instructions the errors throw.
 
-* How to run the test suite
+To start server:
 
-* Services (job queues, cache servers, search engines, etc.)
+* rails s
 
-* Deployment instructions
+If port is failing:
 
-* ...
+* rails s -p 3001
+
+Log in:
+
+psql -U postgres
+
+If website is throwing errors:
+
+* Make sure the following services are running (no such myapp):
+
+pgbouncer
+
+postgreSQL-x64-12 - PostgreSQL Server 12
+
+Heroku Documentation: https://docs.google.com/document/d/1Uyluwm94Cv4rbofzz4L_CaVtb1NYfMjuQ9UqZNE7WlE/edit
+
+Instructions: https://docs.google.com/document/d/1aJz52Rf74k4hVmQnnL-RLvzrzggto7DF/edit

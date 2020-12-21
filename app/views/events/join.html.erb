@@ -1,0 +1,50 @@
+<head>
+	<title>ESC PT - Join Event</title>
+	<%= stylesheet_link_tag "events" %>
+</head>
+
+<% @page_title = "Join Event" %>
+
+<% if (@event.Date - DateTime.current() + 22500) >= 0 %>
+	<div class="col-padding-30 d-flex justify-content-center">
+		<h1 class="page-header"> Join Event Confirmation </h1> <br/>
+	</div>
+
+
+	<div class="col-card d-flex justify-content-center">
+		<div class="card w-50">
+			<div class="card-header text-center">
+				<h2 class="content-title"><%=@event.EventName%></h2>
+			</div>
+			<div class="card-body">
+				<div class="tab-content">
+					<div class="events join">
+					  <%= form_for(@event, url: event_path(update_form: "join-form")) do |f| %>
+					    <p>Are you sure you want to attend this event?</p>
+					    <div class="form-buttons">
+					      <%= f.submit("Confirm Joinning Event", class: "btn btn-success") %>
+						  <!-- add points to user -->
+					    </div>
+					  <%end%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<%else%>
+	<style>
+		body{background: rgba(255,0,0,.75)}
+	</style>
+
+	<div class="col-padding-30 d-flex justify-content-center">
+		<h1 class="error-header"> Cannot join this event </h1> <br/>
+	</div>
+	<div class="col-card d-flex justify-content-center">
+		<div class="div-1">
+			<p class="paragraph-1">
+				We're sorry, but it's too late to sign up to join this event. Remember,
+				you only have 15 minutes after the time of the event to sign up!
+			</p>
+		</div>
+	</div>
+<%end%>

@@ -1,0 +1,82 @@
+<head>
+	<title>ESC PT - Reward List</title>
+	<%= stylesheet_link_tag "events" %>
+</head>
+
+<% if @rewards.size > 0 %>
+	<% past_reward_header = true %>
+	<% future_reward_header = true %>
+
+	<% @rewards.each do |reward|%>
+		<% reward_date = reward.Date.to_s[5...10] + "-" + reward.Date.to_s[0...4]%>
+		<% reward_hour = reward.Date.to_s[11...13].to_i %>
+		<% am_or_pm = " am" %>
+
+		<% if reward_hour == 0 %>
+			<% reward_hour = 12 %>
+		<% elsif reward_hour > 12 %>
+			<% reward_hour = reward_hour.modulo(12) %>
+			<% am_or_pm = " pm" %>
+		<%end%>
+
+		<% reward_time = reward_hour.to_s + reward.Date.to_s[13...16] + am_or_pm %>
+
+		<% if (past_reward_header && reward.Date.to_f < DateTime.current().to_f + 900.0) %>
+			<div class="col-padding-30 d-flex justify-content-center">
+				<h1 class="page-header"> Past Rewards </h1> <br/>
+			</div>
+			<% past_reward_header = false %>
+		<% elsif (future_reward_header && reward.Date.to_f >= DateTime.current().to_f + 900.0) %>
+			<div class="col-padding-bottom-30 d-flex justify-content-center">
+				<h1 class="page-header"> Future Rewards </h1> <br/>
+			</div>
+			<% future_reward_header = false %>
+		<%end%>
+
+		<div class="col-card d-flex justify-content-center">
+			<div class="card w-50">
+				<div class="card-header text-center">
+					<h1 class="card-title"><%=reward.EventName%>
+						<% if reward.Date.to_f < DateTime.current().to_f + 900.0 %>
+							(Past)
+						<% else %>
+							(<%=reward_date%>)
+						<%end%>
+					</h1>
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#details_<%=reward.id%>">Date and Location</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#description_<%=reward.id%>">Description</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="card-body">
+					<div class="tab-content">
+						<div id="details_<%=reward.id%>" class="tab-pane fade show active">
+							<h1 class="content-title">Date and Location</h1>
+							<p class="content-paragraph"> Date: <%=reward_date%> at <%=reward_time%>
+							<br/> Location: <%= reward.Location%></p>
+						</div>
+						<div id="description_<%=reward.id%>" class="tab-pane fade">
+							<h1 class="content-title">Description</h1>
+							<p class="tab-paragraph"><%=reward.Description%></p>
+							<p class="tab-paragraph">You must have <%=reward.point_value%> point(s) to attend this event.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<%end%>
+<%else%>
+		<div class="col-padding-30 d-flex justify-content-center">
+			<h1 class="page-header"> No rewards Posted </h1> <br/>
+		</div>
+		<div class="col-card d-flex justify-content-center">
+			<p class="paragraph-1">
+				There are currently no rewards posted. Check in another time for updates!
+			</p>
+		</div>
+	<%end%>

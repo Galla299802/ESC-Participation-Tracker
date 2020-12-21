@@ -1,15 +1,93 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
-    <title>EscParticipationApp</title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= stylesheet_link_tag "application" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <!--Header using Bootstrap navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #F3C417; width: 100%">
+    	<a class="navbar-brand" href="/">
+    		<%= image_tag "ESC-app-logo", size:"40x40", alt:"ESC Participation Tracker" %>
+    		ESC Participation Tracker
+    	</a>
+    	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <% if @home_page %>
+          <li class="nav-item active">
+          <% else %>
+          <li class="nav-item">
+          <%end%>
+            <a class="nav-link" href="/">Home</a>
+          </li>
+
+    			<% if can? :manage, User %>
+      		<li class="nav-item">
+      			<a class="nav-link" href="/admin">Admin Portal</a>
+      		</li>
+    			<% end %>
+
+
+    			<% if current_user.nil? %>
+          <li class="nav-item">
+      				<a class="nav-link" href="/user/sign_in">Login/Sign Up</a>
+      		</li>
+
+    			<% else %>
+            <% if @event_index %>
+            <li class="nav-item active">
+            <% else %>
+      			<li class="nav-item">
+            <%end%>
+      				<a class="nav-link" href="/events#index">
+                <% if @back_to_event_list %> Back to Event List
+                <% else %> View Event List
+                <%end%>
+              </a>
+      			</li>
+            <% if @view_your_points %>
+            <li class="nav-item active">
+            <% else %>
+            <li class="nav-item">
+            <%end%>
+              <a class="nav-link" href="/users/<%= current_user.id %>">View Your Points</a>
+            </li>
+            <% if @rewards_page %>
+            <li class="nav-item active">
+            <% else %>
+            <li class="nav-item">
+              <%end%>
+              <a class="nav-link" href="/rewards">View Reward Events<a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+      			<li class="nav-item">
+      				<a class="nav-link" rel="nofollow" data-method="delete" href="/user/sign_out">Log Out</a>
+      			</li>
+    			<% end %>
+    		</ul>
+    	</div>
+    </nav>
+
+    <% unless flash.empty? %>
+   <script type="text/javascript">
+      <% flash.each do |f| %>
+    <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+   	 toastr['<%= type %>']('<%= f[1] %>');
+   <% end %>
+   </script>
+<% end %>
     <%= yield %>
   </body>
 </html>

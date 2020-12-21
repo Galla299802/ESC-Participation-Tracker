@@ -1,0 +1,28 @@
+// Place all the styles related to the events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.col-padding-30 {padding: 30px}
+.col-padding-bottom-30 {padding-bottom: 30px}
+
+.page-header {color: #000000}
+.error-header {color: #ffffff}
+
+.card-header {background-color: #F3C417}
+.card-body, .card {background-color: #FFF9F8}
+.card-title, .content-title, .show-title {font-size: 28px}
+.card-title, .show-title {color: #000000}
+.content-title, .content-paragraph {color: #000000}
+.show-title {font-size: 2.5em; color: #000000; text-align: center}
+.col-card {padding-bottom: 64px}
+
+.nav-tabs>li>a {background-color: #D7D1D0; color: #000000}
+.nav-tabs .nav-item .nav-link.active {background-color: #FFF9F8; color: #000000; border-bottom:1px solid #FFF9F8}
+.nav-tabs>li>a:hover {background-color: #FFF9F8}
+.nav-tabs .nav-item .nav-link {border-color: #000000}
+
+.container {background-color: #F3C417; padding-top: 30px}
+
+.div-1 {background: rgba(255,0,0,.25); padding: 20px;  color: #ffffff;}
+.div-2 {background: rgba(0,0,0,.25); padding: 20px;  color: #ffffff;}
+.paragraph-1 {padding-top: 10px;}
